@@ -29,7 +29,7 @@
 <h2 id="watching-custom-files">Watching custom files</h2>
 <pre class="highlight javascript"><code><span class="nx">api</span><span class="p">.</span><span class="nx">watchFileAndAct</span><span class="p">(</span><span class="nx">path_to_file</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
   <span class="nx">api</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'rebooting due to config change: '</span> <span class="o">+</span> <span class="nx">path_to_file</span><span class="p">,</span> <span class="s1">'info'</span><span class="p">);</span>
-  <span class="nx">api</span><span class="p">.</span><span class="nx">commands</span><span class="p">.</span><span class="nx">restart</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">api</span><span class="p">.</span><span class="nx">_self</span><span class="p">);</span>
+  <span class="nx">api</span><span class="p">.</span><span class="nx">commands</span><span class="p">.</span><span class="nx">restart</span><span class="p">();</span>
 <span class="p">});</span>
 </code></pre>
 

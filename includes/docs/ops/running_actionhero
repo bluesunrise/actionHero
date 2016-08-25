@@ -159,7 +159,7 @@ Descriptions:
 
 <h2 id="signals">Signals</h2>
 <pre class="highlight shell"><code><span class="gp">&gt; </span>./node_modules/.bin/actionhero start cluster --workers<span class="o">=</span>2
-info: actionhero &gt;&gt; startCluster
+info: actionhero &gt;&gt; start cluster
 notice:  - STARTING CLUSTER -
 notice: pid: 41382
 info: starting worker <span class="c">#1</span>
@@ -196,7 +196,7 @@ info: all workers gone
 notice: cluster <span class="nb">complete</span>, Bye!
 </code></pre>
 
-<p>ActionHero is intended to be run on <code class="prettyprint">*nix</code> operating systems.  The <code class="prettyprint">start</code> and <code class="prettyprint">startCluster</code> commands provide support for signaling. (There is limited support for some of these commands in windows).</p>
+<p>ActionHero is intended to be run on <code class="prettyprint">*nix</code> operating systems.  The <code class="prettyprint">start</code> and <code class="prettyprint">start cluster</code> commands provide support for signaling. (There is limited support for some of these commands in windows).</p>
 
 <p><strong>actionhero start</strong></p>
 

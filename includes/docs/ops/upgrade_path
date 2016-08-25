@@ -11,18 +11,17 @@
 <p><strong>Full Release Notes: <a href="https://github.com/evantahler/actionhero/releases/tag/v15.0.0">GitHub</a></strong></p>
 
 <p><strong>Breaking Changes and How to Overcome Them:</strong></p>
+<pre class="highlight shell"><code><span class="sb">`</span>actionhero generateAction --name<span class="o">=[</span>name]<span class="sb">`</span>      -&gt; <span class="sb">`</span>actionhero generate action --name<span class="o">=[</span>name]<span class="sb">`</span>
+<span class="sb">`</span>actionhero generateInitializer --name<span class="o">=[</span>name]<span class="sb">`</span> -&gt; <span class="sb">`</span>actionhero generate initializer --name<span class="o">=[</span>name]<span class="sb">`</span>
+<span class="sb">`</span>actionhero generateServer --name<span class="o">=[</span>name]<span class="sb">`</span>      -&gt; <span class="sb">`</span>actionhero generate server --name<span class="o">=[</span>name]<span class="sb">`</span>
+<span class="sb">`</span>actionhero generateTask --name<span class="o">=[</span>name]<span class="sb">`</span>        -&gt; <span class="sb">`</span>actionhero generate task --name<span class="o">=[</span>name]<span class="sb">`</span>
+</code></pre>
 
 <ul>
 <li>The ActionHero binary has had it&rsquo;s commands changed.<br>
 
 <ul>
-<li>Any deployment or automation tools you use will need to be updated accordingly.
-<code class="prettyprint">
-`actionhero generateAction --name=[name]`      -&gt; `actionhero generate action --name=[name]`
-`actionhero generateInitializer --name=[name]` -&gt; `actionhero generate initializer --name=[name]`
-`actionhero generateServer --name=[name]`      -&gt; `actionhero generate server --name=[name]`
-`actionhero generateTask --name=[name]`        -&gt; `actionhero generate task --name=[name]`
-</code></li>
+<li>Any deployment or automation tools you use will need to be updated accordingly.</li>
 </ul></li>
 <li>Tasks now use middleware instead of plugins.
 

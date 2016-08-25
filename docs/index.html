@@ -1410,7 +1410,7 @@ extending the <code class="prettyprint">api.tasks</code> object.</p>
 
 <p><em>AKA: Running ActionHero in a Cluster</em></p>
 
-<p>ActionHero can be run either as a solitary server or as part of a cluster.  The goal of these cluster helpers is to allow you to create a group of servers which will share state and each be able to handle requests and run tasks.  You can add or remove nodes from the cluster without fear of data loss or task duplication.  You can also run many instances of ActionHero on the same server using node.js&rsquo; cluster methods (<code class="prettyprint">ActionHero startCluster</code>), which you <a href="/docs#production-notes">can learn more about here</a>.</p>
+<p>ActionHero can be run either as a solitary server or as part of a cluster.  The goal of these cluster helpers is to allow you to create a group of servers which will share state and each be able to handle requests and run tasks.  You can add or remove nodes from the cluster without fear of data loss or task duplication.  You can also run many instances of ActionHero on the same server using node.js&rsquo; cluster methods (<code class="prettyprint">ActionHero start cluster</code>), which you <a href="/docs#production-notes">can learn more about here</a>.</p>
 
 <p>Cluster instances are named sequentially, starting with actionhero-worker-1, and can be retrived from &lsquo;api.id&rsquo;. Logs and PID&rsquo;s, as well as other instance-specific information follow this pattern as well.</p>
 
@@ -1824,7 +1824,7 @@ extending the <code class="prettyprint">api.tasks</code> object.</p>
 <h2 id="watching-custom-files">Watching custom files</h2>
 <pre class="highlight javascript"><code><span class="nx">api</span><span class="p">.</span><span class="nx">watchFileAndAct</span><span class="p">(</span><span class="nx">path_to_file</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
   <span class="nx">api</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'rebooting due to config change: '</span> <span class="o">+</span> <span class="nx">path_to_file</span><span class="p">,</span> <span class="s1">'info'</span><span class="p">);</span>
-  <span class="nx">api</span><span class="p">.</span><span class="nx">commands</span><span class="p">.</span><span class="nx">restart</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">api</span><span class="p">.</span><span class="nx">_self</span><span class="p">);</span>
+  <span class="nx">api</span><span class="p">.</span><span class="nx">commands</span><span class="p">.</span><span class="nx">restart</span><span class="p">();</span>
 <span class="p">});</span>
 </code></pre>
 
@@ -3955,12 +3955,12 @@ http <span class="o">{</span>
 <h3 id="topology">Topology</h3>
 
 <ul>
-<li>Run a cluster via <code class="prettyprint">startCluster</code>.  This will guarantee that you can reboot your application with 0 downtime and deploy new versions without interruption.
+<li>Run a cluster via <code class="prettyprint">start cluster</code>.  This will guarantee that you can reboot your application with 0 downtime and deploy new versions without interruption.
 
 <ul>
-<li>You can run 1 ActionHero instance per core (assuming the server is dedicated to ActionHero), and that is the default behavior of <code class="prettyprint">startCluster</code>.</li>
+<li>You can run 1 ActionHero instance per core (assuming the server is dedicated to ActionHero), and that is the default behavior of <code class="prettyprint">start cluster</code>.</li>
 <li>You don&rsquo;t need a tool like PM2 to manage ActionHero cluster process, but you can.</li>
-<li>You can use an init script to <code class="prettyprint">startCluster</code> at boot, or use a tool like <a href="https://mmonit.com/monit/">monit</a> to do it for you.</li>
+<li>You can use an init script to <code class="prettyprint">start cluster</code> at boot, or use a tool like <a href="https://mmonit.com/monit/">monit</a> to do it for you.</li>
 </ul></li>
 <li>Never run tasks on the same ActionHero instances you run your servers on; never run your servers on the same ActionHero instances you run your tasks on
 
@@ -3986,7 +3986,7 @@ http <span class="o">{</span>
 
 <h3 id="crashing-and-safety">Crashing and Safety</h3>
 <pre class="highlight shell"><code><span class="gp">&gt; </span>./node_modules./bin/actionhero start cluster --workers 1
-2016-04-11T18:51:32.891Z - info: actionhero &gt;&gt; startCluster
+2016-04-11T18:51:32.891Z - info: actionhero &gt;&gt; start cluster
 2016-04-11T18:51:32.904Z - notice:  - STARTING CLUSTER -
 2016-04-11T18:51:32.905Z - notice: pid: 43315
 2016-04-11T18:51:32.911Z - info: starting worker <span class="c">#1</span>
@@ -4014,8 +4014,8 @@ http <span class="o">{</span>
 </code></pre>
 
 <ul>
-<li>Let the app crash rather than being defensive prematurely.  ActionHero has a good logger, and if you are running within <code class="prettyprint">startCluster</code> mode, your server will be restarted.  It is very easy to hide uncaught errors, exceptions, or un-resolved promises, and doing so might leave your application in strange state.<br></li>
-<li>We removed domains from the project in v13 to follow this philosophy, and rely on a parent process (<code class="prettyprint">startCluster</code>) to handle error logging.  Domains are deprecated in node.js now for the same reasons we discuss here.
+<li>Let the app crash rather than being defensive prematurely.  ActionHero has a good logger, and if you are running within <code class="prettyprint">start cluster</code> mode, your server will be restarted.  It is very easy to hide uncaught errors, exceptions, or un-resolved promises, and doing so might leave your application in strange state.<br></li>
+<li>We removed domains from the project in v13 to follow this philosophy, and rely on a parent process (<code class="prettyprint">start cluster</code>) to handle error logging.  Domains are deprecated in node.js now for the same reasons we discuss here.
 
 <ul>
 <li>For example, if you timeout connections that are taking too long, what are you going to do about the database connection it was running?  Will you roll it back?  What about the other clients using the same connection pool?  How can you be sure which connection in the mySQL pool was in use?  Rather than handle all these edge cases&hellip; just let your app crash, log, and reboot.<br></li>
@@ -4203,7 +4203,7 @@ Descriptions:
 
 <h2 id="signals">Signals</h2>
 <pre class="highlight shell"><code><span class="gp">&gt; </span>./node_modules/.bin/actionhero start cluster --workers<span class="o">=</span>2
-info: actionhero &gt;&gt; startCluster
+info: actionhero &gt;&gt; start cluster
 notice:  - STARTING CLUSTER -
 notice: pid: 41382
 info: starting worker <span class="c">#1</span>
@@ -4240,7 +4240,7 @@ info: all workers gone
 notice: cluster <span class="nb">complete</span>, Bye!
 </code></pre>
 
-<p>ActionHero is intended to be run on <code class="prettyprint">*nix</code> operating systems.  The <code class="prettyprint">start</code> and <code class="prettyprint">startCluster</code> commands provide support for signaling. (There is limited support for some of these commands in windows).</p>
+<p>ActionHero is intended to be run on <code class="prettyprint">*nix</code> operating systems.  The <code class="prettyprint">start</code> and <code class="prettyprint">start cluster</code> commands provide support for signaling. (There is limited support for some of these commands in windows).</p>
 
 <p><strong>actionhero start</strong></p>
 
@@ -4304,7 +4304,7 @@ notice: cluster <span class="nb">complete</span>, Bye!
     <span class="s2">"help"</span>         <span class="err">:</span> <span class="s2">"actionhero help"</span><span class="p">,</span>
     <span class="s2">"start"</span>        <span class="err">:</span> <span class="s2">"actionhero start"</span><span class="p">,</span>
     <span class="s2">"actionhero"</span>   <span class="err">:</span> <span class="s2">"actionhero"</span><span class="p">,</span>
-    <span class="s2">"startCluster"</span> <span class="err">:</span> <span class="s2">"actionhero start cluster"</span><span class="p">,</span>
+    <span class="s2">"start cluster"</span><span class="err">:</span> <span class="s2">"actionhero start cluster"</span><span class="p">,</span>
     <span class="s2">"test"</span>         <span class="err">:</span> <span class="s2">"NODE_ENV=test mocha"</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -4433,18 +4433,17 @@ notice: cluster <span class="nb">complete</span>, Bye!
 <p><strong>Full Release Notes: <a href="https://github.com/evantahler/actionhero/releases/tag/v15.0.0">GitHub</a></strong></p>
 
 <p><strong>Breaking Changes and How to Overcome Them:</strong></p>
+<pre class="highlight shell"><code><span class="sb">`</span>actionhero generateAction --name<span class="o">=[</span>name]<span class="sb">`</span>      -&gt; <span class="sb">`</span>actionhero generate action --name<span class="o">=[</span>name]<span class="sb">`</span>
+<span class="sb">`</span>actionhero generateInitializer --name<span class="o">=[</span>name]<span class="sb">`</span> -&gt; <span class="sb">`</span>actionhero generate initializer --name<span class="o">=[</span>name]<span class="sb">`</span>
+<span class="sb">`</span>actionhero generateServer --name<span class="o">=[</span>name]<span class="sb">`</span>      -&gt; <span class="sb">`</span>actionhero generate server --name<span class="o">=[</span>name]<span class="sb">`</span>
+<span class="sb">`</span>actionhero generateTask --name<span class="o">=[</span>name]<span class="sb">`</span>        -&gt; <span class="sb">`</span>actionhero generate task --name<span class="o">=[</span>name]<span class="sb">`</span>
+</code></pre>
 
 <ul>
 <li>The ActionHero binary has had it&rsquo;s commands changed.<br>
 
 <ul>
-<li>Any deployment or automation tools you use will need to be updated accordingly.
-<code class="prettyprint">
-`actionhero generateAction --name=[name]`      -&gt; `actionhero generate action --name=[name]`
-`actionhero generateInitializer --name=[name]` -&gt; `actionhero generate initializer --name=[name]`
-`actionhero generateServer --name=[name]`      -&gt; `actionhero generate server --name=[name]`
-`actionhero generateTask --name=[name]`        -&gt; `actionhero generate task --name=[name]`
-</code></li>
+<li>Any deployment or automation tools you use will need to be updated accordingly.</li>
 </ul></li>
 <li>Tasks now use middleware instead of plugins.
 
